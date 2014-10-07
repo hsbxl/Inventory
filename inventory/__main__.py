@@ -5,7 +5,7 @@ HSBXL inventory web app.
 import os.path
 import json
 
-from bottle import Bottle, template, static_file, response
+from bottle import Bottle, template, static_file, request, response
 import rethinkdb as r
 
 HERE = os.path.dirname(os.path.realpath(__file__))
@@ -28,7 +28,7 @@ def index():
 
 @bottle.route('/item/')
 def index():
-    all_items = items.run()
+    all_items = items.filter(dict(request.query)).run()
     return template(os.path.join(HERE, 'views/items'), items=all_items)
 
 
@@ -36,7 +36,8 @@ def index():
 def index():
     response.content_type = 'application/json'
     response.set_header('Access-Control-Allow-Origin', '*')
-    return json.dumps(list(items.run()))
+    all_items = items.filter(dict(request.query)).run()
+    return json.dumps(list(all_items))
 
 
 @bottle.route('/item/<name>')
