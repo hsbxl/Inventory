@@ -7,7 +7,7 @@
         <a href="https://github.com/hsbxl/Inventory">Hack on it !</a>
     </p>
     <p>
-        Have a look at <a href='/object/some_stuff'>some stuff</a>.
+        Have a look at <a href='/item/some_stuff'>some stuff</a>.
     </p>
 </body>
 </html>
