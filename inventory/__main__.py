@@ -28,7 +28,14 @@ def index():
 
 @bottle.route('/item/')
 def index():
+    all_items = items.run()
+    return template(os.path.join(HERE, 'views/items'), items=all_items)
+
+
+@bottle.route('/item.json')
+def index():
     response.content_type = 'application/json'
+    response.set_header('Access-Control-Allow-Origin', '*')
     return json.dumps(list(items.run()))
 
 
@@ -43,4 +50,4 @@ def server_static(filename):
     return static_file(filename, root=os.path.join(HERE, 'static'))
 
 
-bottle.run(debug=True, reloader=True, host='localhost', port=8000)
+bottle.run(debug=True, reloader=True, host='0.0.0.0', port=8000)
