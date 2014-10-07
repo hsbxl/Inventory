@@ -46,7 +46,7 @@ def index(name):
     return json.dumps(items.get(name).run())
 
 
-@bottle.route('/static/<filename>')
+@bottle.route('/static/<filename:path>')
 def server_static(filename):
     return static_file(filename, root=os.path.join(HERE, 'static'))
 
