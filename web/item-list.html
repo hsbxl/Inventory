@@ -1,0 +1,38 @@
+<link rel="import" href="components/polymer/polymer.html">
+<link rel="import" href="item-service/item-service.html">
+<link rel="import" href="item-card.html">
+
+<polymer-element name="item-list" attributes="show">
+  <template>
+    <style>
+    :host {
+      display: block;
+      width: 100%;
+    }
+    item-card {
+      margin-bottom: 30px;
+    }
+    </style>
+
+    <item-service id="service" items="{{items}}"></item-service>
+    
+    <div layout vertical center>
+      <template repeat="{{item in items}}">
+        <item-card>
+          <img src="{{item.avatar}}" width="70" height="70">
+          <h2>{{item.name}}</h2>
+          <p>{{item.description}}</p>
+        </item-card>
+      </template>
+    </div>
+  </template>
+
+  <script>
+  Polymer({
+    handleFavorite: function(event, detail, sender) {
+      var post = sender.templateInstance.model.post;
+      this.$.service.setFavorite(post.uid, post.favorite);
+    }
+  });
+  </script>
+</polymer-element>
