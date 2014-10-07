@@ -16,7 +16,7 @@ def index():
     return template(os.path.join(HERE, 'views/index'))
 
 
-@bottle.route('/object/<name>')
+@bottle.route('/item/<name>')
 def index(name):
     response.content_type = 'application/json'
     return json.dumps({"hello": "stuff"})
