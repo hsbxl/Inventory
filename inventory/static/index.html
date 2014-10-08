@@ -67,9 +67,9 @@
     <core-toolbar>
 
       <paper-tabs id="tabs" selected="one" self-end>
-        <paper-tab name="one">The Item</paper-tab>
-        <paper-tab name="all">All</paper-tab>
-        <paper-tab name="recent">Recent</paper-tab>
+        <paper-tab name="one">The item</paper-tab>
+        <paper-tab name="old">Old's</paper-tab>
+        <paper-tab name="new">New's</paper-tab>
       </paper-tabs>
 
     </core-toolbar>
@@ -87,13 +87,16 @@
   tabs.addEventListener('core-select', function() {
       switch (tabs.selected){
           case "one":
-              list.filter={id:window.location.hash};
+              list.filter={id:window.location.hash.substr(1)};
               break;
-          case "recent":
-              list.filter={order:"date", limit:"5"};
+          case "new":
+              list.filter={sort:"date ASC", limit:5};
+              break;
+          case "old":
+              list.filter={sort:"maintained DESC", limit:5};
               break;
           default :
-              list.filter={limit:"5"};
+              list.filter={limit:5};
       }
   });
   </script>

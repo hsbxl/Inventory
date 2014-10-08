@@ -32,11 +32,8 @@
     created: function(){
         this.filter="{id:'" + window.location.hash.substr(1) + "'}";
     },
-    attributeChanged: function(attrName, oldVal, newVal) {
-        //var newVal = this.getAttribute(attrName);
-        if (attrName == "filter"){
-            this.$.service.filter = newVal;
-        }
+    filterChanged: function(oldVal, newVal) {
+       this.$.service.filter = newVal;
     },
     handleFavorite: function(event, detail, sender) {
       var post = sender.templateInstance.model.post;

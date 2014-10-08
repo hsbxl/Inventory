@@ -64,31 +64,54 @@
   Polymer('item-service', {
     created: function() {
       this.items = [];
+      this.itemFilter = {};
       console.log(this.items);
     },
-    ready: function(){
+    filterChanged: function(oldVal, newVal) {
         this.updateQuery();
         this.$.ajax.go();
-    },
-    attributeChanged: function(attrName, oldVal, newVal) {
-          //var newVal = this.getAttribute(attrName);
-          if (attrName == "filter"){
-              this.updateQuery();
-              this.$.ajax.go();
-          }
     },
     itemsLoaded: function() {
       // Make a copy of the loaded data
       this.items = this.$.ajax.response.slice(0);
+
+      if (this.itemFilter.hasOwnProperty("sort")){
+          sortParts = this.itemFilter["sort"].split(" ");
+          sort = sortParts[0];
+          if (sortParts.length < 2){
+              order = "ASC"
+          } else {
+              order = sortParts[1];
+          }
+          this.items = this.items.sort(function(a, b){
+              if (order == "ASC") {
+                  return a[sort] < b[sort];
+              } else {
+                  return a[sort] > b[sort];
+              }
+          });
+      }
+
+        if (this.itemFilter.hasOwnProperty("limit")){
+            limit = this.itemFilter["limit"];
+            this.items = this.items.slice(0, limit);
+        }
+
     },
     updateQuery: function() {
-        itemFilter = eval("(" + this.filter + ")");
-        this.query = "";
+        if ((typeof this.filter) == "string") {
+            itemFilter = eval("(" + this.filter + ")");
+        } else {
+            itemFilter = this.filter;
+        }
+        q = "";
         for (var key in itemFilter) {
-            if (itemFilter.hasOwnProperty(key)) {
-                this.query += key + "=" + itemFilter[key] + "";
+            if (key.match("id|name") && itemFilter.hasOwnProperty(key)) {
+                q += key + "=" + itemFilter[key] + "&";
             }
         }
+        this.query = q;
+        this.itemFilter = itemFilter;
     },
     /** 
      * Update the service with the current favorite value.
