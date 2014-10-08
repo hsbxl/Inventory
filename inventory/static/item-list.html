@@ -2,7 +2,7 @@
 <link rel="import" href="item-service/item-service.html">
 <link rel="import" href="item-card.html">
 
-<polymer-element name="item-list" attributes="show">
+<polymer-element name="item-list" attributes="filter">
   <template>
     <style>
     :host {
@@ -14,11 +14,11 @@
     }
     </style>
 
-    <item-service id="service" items="{{items}}"></item-service>
+    <item-service id="service" items="{{items}}" filter="{{filter}}"></item-service>
     
     <div layout vertical center>
       <template repeat="{{item in items}}">
-        <item-card>
+        <item-card item-id="{{item.id}}">
           <img src="{{item.avatar}}" width="70" height="70">
           <h2>{{item.name}}</h2>
           <p>{{item.description}}</p>
@@ -29,6 +29,15 @@
 
   <script>
   Polymer({
+    created: function(){
+        this.filter="{id:'" + window.location.hash.substr(1) + "'}";
+    },
+    attributeChanged: function(attrName, oldVal, newVal) {
+        //var newVal = this.getAttribute(attrName);
+        if (attrName == "filter"){
+            this.$.service.filter = newVal;
+        }
+    },
     handleFavorite: function(event, detail, sender) {
       var post = sender.templateInstance.model.post;
       this.$.service.setFavorite(post.uid, post.favorite);

@@ -1,7 +1,7 @@
 <link rel="import" href="components/polymer/polymer.html">
 <link rel="import" href="components/core-icon-button/core-icon-button.html">
 
-<polymer-element name="item-card" properties="id">
+<polymer-element name="item-card" attributes="item-id">
   <template>
     <style>
     :host {
@@ -38,8 +38,6 @@
       color: #da4336;
     }
     </style>
-
-    <item-service id="service" item="{{item}}" id="{{id}}"></item-service>
 
     <div class="card-header" layout horizontal center>
 

@@ -66,17 +66,16 @@
 
     <core-toolbar>
 
-      <paper-tabs id="tabs" selected="all" self-end>
+      <paper-tabs id="tabs" selected="one" self-end>
         <paper-tab name="one">The Item</paper-tab>
         <paper-tab name="all">All</paper-tab>
-        <paper-tab name="favorites">Favorites</paper-tab>
+        <paper-tab name="recent">Recent</paper-tab>
       </paper-tabs>
 
     </core-toolbar>
 
     <div class="container" layout vertical center>
-      <item-card></item-card>
-      <item-list show="all"></item-list>
+      <item-list></item-list>
     </div>
 
   </core-header-panel>
@@ -84,13 +83,17 @@
   <script>
   var tabs = document.querySelector('paper-tabs');
   var list = document.querySelector('item-list');
-  var item = document.querySelector('item-card');
 
   tabs.addEventListener('core-select', function() {
-      if (tabs.selected == "one") {
-          item.id = window.location.hash
-      } else {
-          list.show = tabs.selected;
+      switch (tabs.selected){
+          case "one":
+              list.filter={id:window.location.hash};
+              break;
+          case "recent":
+              list.filter={order:"date", limit:"5"};
+              break;
+          default :
+              list.filter={limit:"5"};
       }
   });
   </script>
