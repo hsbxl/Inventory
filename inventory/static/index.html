@@ -17,6 +17,8 @@
     href="/static/components/core-toolbar/core-toolbar.html">
   <link rel="import"
     href="/static/components/paper-tabs/paper-tabs.html">
+  <link rel="import"
+          href="/static/components/paper-fab/paper-fab.html">
   <link rel="import" href="/static/item-list.html">
 
   <style>
@@ -76,6 +78,7 @@
 
     <div class="container" layout vertical center>
       <item-list></item-list>
+      <paper-fab icon="add" class="blue" role="button" style="background: #03a9f4"></paper-fab>
     </div>
 
   </core-header-panel>
@@ -83,7 +86,7 @@
   <script>
   var tabs = document.querySelector('paper-tabs');
   var list = document.querySelector('item-list');
-
+  var addFab = document.querySelector('paper-fab');
   tabs.addEventListener('core-select', function() {
       switch (tabs.selected){
           case "one":
@@ -99,6 +102,9 @@
               list.filter={limit:5};
       }
   });
+      addFab.addEventListener('tab', function(){
+          
+      });
   </script>
 </body>
 
