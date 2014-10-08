@@ -23,7 +23,7 @@ items = r.db("inventory").table("items")
 
 @bottle.route('/')
 def index():
-    return template(os.path.join(HERE, 'views/index'))
+    return static_file('index.html', root=os.path.join(HERE, 'static'))
 
 
 @bottle.route('/item/')
